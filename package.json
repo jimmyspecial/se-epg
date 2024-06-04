@@ -14,7 +14,8 @@
     "test": "run-script-os",
     "test:win32": "SET \"TZ=Pacific/Nauru\" && npx jest --runInBand",
     "test:default": "TZ=Pacific/Nauru npx jest --runInBand",
-    "postinstall": "npm run api:load"
+    "postinstall": "npm run api:load",
+    "start": "node index.js"
   },
   "private": true,
   "author": "Arhey",
@@ -25,6 +26,9 @@
     },
     "testRegex": "(tests|sites)/(.*?/)?.*test.(js|ts)$",
     "testTimeout": 10000
+  },
+  "engines": {
+    "node": "18.x"
   },
   "dependencies": {
     "@alex_neo/jest-expect-message": "^1.0.5",
@@ -54,6 +58,7 @@
     "epg-parser": "^0.2.0",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^9.0.0",
+    "express": "^4.19.2",
     "form-data": "^4.0.0",
     "fs-extra": "^10.0.1",
     "glob": "^7.2.0",
@@ -68,11 +73,13 @@
     "mockdate": "^3.0.5",
     "nedb-promises": "^6.0.3",
     "node-cleanup": "^2.1.2",
+    "node-cron": "^3.0.3",
     "node-gzip": "^1.1.2",
     "numeral": "^2.0.6",
     "parse-duration": "^1.0.0",
     "pdf-parse": "^1.1.1",
     "serve": "^14.2.0",
+    "shelljs": "^0.8.5",
     "signale": "^1.4.0",
     "srcset": "^4.0.0",
     "table2array": "^0.0.2",

@@ -2,7 +2,7 @@ const dayjs = require('dayjs')
 
 module.exports = {
   site: 'tv.nu',
-  days: 2,
+  days: 3,
   url: function ({ channel, date }) {
     return `https://web-api.tv.nu/channels/${channel.site_id}/schedule?date=${date.format(
       'YYYY-MM-DD'
