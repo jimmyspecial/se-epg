@@ -1,12 +1,26 @@
-const { parser, url, request, fetchApiVersion, apiVersion } = require('./pickx.be.config.js')
+jest.mock('./pickx.be.config.js', () => {
+  const originalModule = jest.requireActual('./pickx.be.config.js')
+  return {
+    ...originalModule,
+    fetchApiVersion: jest.fn(() => Promise.resolve())
+  }
+})
+
+const {
+  parser,
+  url,
+  request,
+  fetchApiVersion,
+  setApiVersion,
+  getApiVersion
+} = require('./pickx.be.config.js')
+
 const fs = require('fs')
 const path = require('path')
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 
-
 dayjs.extend(utc)
-
 
 const date = dayjs.utc('2023-12-13').startOf('d')
 const channel = {
@@ -15,12 +29,16 @@ const channel = {
   xmltv_id: 'Vedia.be'
 }
 
+beforeEach(() => {
+  setApiVersion('mockedApiVersion')
+})
+
 it('can generate valid url', async () => {
-  await fetchApiVersion();
-  const generatedUrl = await url({ channel, date });
-  const resolvedApiVersion = apiVersion(); 
-  expect(generatedUrl).toBe(`https://px-epg.azureedge.net/airings/${resolvedApiVersion}/2023-12-13/channel/UID0118?timezone=Europe%2FBrussels`);
-});
+  const generatedUrl = await url({ channel, date })
+  expect(generatedUrl).toBe(
+    `https://px-epg.azureedge.net/airings/mockedApiVersion/2023-12-13/channel/UID0118?timezone=Europe%2FBrussels`
+  )
+})
 
 it('can generate valid request headers', () => {
   expect(request.headers).toMatchObject({
@@ -41,10 +59,10 @@ it('can parse response', () => {
     start: '2023-12-12T23:55:00.000Z',
     stop: '2023-12-13T00:15:00.000Z',
     title: 'Le 22h30',
-    description:
-      'Le journal de vivre ici.',
+    description: 'Le journal de vivre ici.',
     category: 'Info',
-    icon: 'https://experience-cache.proximustv.be/posterserver/poster/EPG/w-166_h-110/250_250_4B990CC58066A7B2A660AFA0BDDE5C41.jpg'
+    image:
+      'https://experience-cache.proximustv.be/posterserver/poster/EPG/w-166_h-110/250_250_4B990CC58066A7B2A660AFA0BDDE5C41.jpg'
   })
 })
 

@@ -7,12 +7,12 @@ dayjs.extend(utc)
 
 const date = dayjs.utc('2022-03-06', 'YYYY-MM-DD').startOf('d')
 const channel = {
-  site_id: 'ar#',
+  site_id: 'ar',
   xmltv_id: 'I24NewsArabic.il'
 }
 
 it('can generate valid url', () => {
-  expect(url({ channel })).toBe('https://api.i24news.tv/v2/ar/schedules/world')
+  expect(url({ channel })).toBe('https://api.i24news.tv/v2/ar/schedules')
 })
 
 it('can parse response', () => {
@@ -30,7 +30,8 @@ it('can parse response', () => {
       stop: '2022-03-06T13:28:00.000Z',
       title: 'تغطية خاصة',
       description: 'Special Edition',
-      icon: 'https://cdn.i24news.tv/uploads/a1/be/85/20/69/6f/32/1c/ed/b0/f8/5c/f6/1c/40/f9/a1be8520696f321cedb0f85cf61c40f9.png'
+      image:
+        'https://cdn.i24news.tv/uploads/a1/be/85/20/69/6f/32/1c/ed/b0/f8/5c/f6/1c/40/f9/a1be8520696f321cedb0f85cf61c40f9.png'
     }
   ])
 })
