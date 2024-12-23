@@ -4,6 +4,7 @@
 /guide.xml
 /guide.xml.gz
 /dist/
+/public/guide.xml
 
 # macOS
 .DS_Store
