@@ -1,13 +1,16 @@
 const express = require('express')
-const shell = require('shelljs')
+const { spawn } = require('child_process')
 const cron = require('node-cron')
 
 const app = express()
 
-shell.echo('EPG Scheduled')
+console.log('EPG Scheduled')
 
 cron.schedule('0 4 * * *', () => {
-  shell.exec('npm run grab --- --sites=allente.se --output="./public/guide.xml" --lang=se')
+  spawn('npm run grab --- --sites=allente.se --output="./public/guide.xml" --lang=se', {
+    shell: true,
+    stdio: 'inherit'
+  })
 })
 
 app.use(express.static('public'))
